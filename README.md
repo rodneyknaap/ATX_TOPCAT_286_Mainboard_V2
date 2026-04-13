@@ -1,6 +1,8 @@
 # ATX_TOPCAT_286_Mainboard_V2  
 REV2 design for the VLSI TOPCAT ATX 286 mainboard  
 
+A rough preview of the design in progress, to be updated after various changes are added:   
+
 ![A photo of the TOPCAT REV2 design in progress](TOPCAT_286_MAINBOARD_REV2_IN_PROGRESS_01.png)  
 
 

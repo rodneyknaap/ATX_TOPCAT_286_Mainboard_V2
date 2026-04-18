@@ -83,6 +83,7 @@ Many thanks go out to sqpat who has made a repo for his work on the disassembled
 https://github.com/sqpat/topcatbios  
 If interested, do check out the code for various comments by sqpat and results of his code examination!  
 So we now have a much faster and more responsive TOPCAT 286 system with the REV1 system capable of running at 22.4MHz!  
+The advanced AMI BIOS allows us to fully tweak the TOPCAT chipset to maximize the performance as far is it is able to go!  
 
 I am currently working on the schematic to add and update more circuit areas and also doing verifications and going over of the entire design.
 

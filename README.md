@@ -36,32 +36,56 @@ When building this project, the builder assumes personal responsibility for trou
 After building the first version of a TOPCAT 286 system, it's time to design a second improved version which includes a number of changes:  
 - adding series termination resistor footprints for possibly improving edges of signals going to the DRAMs
 - 72 pin DRAM modules instead of 30 pin ones
+- using 4 megabit 4 bit wide DRAMs on SIMMs will reduce the DRAM address and control bus load
 - adding series termination resistors for the fast clocks
 - adding the possibility to remove the BUSCLOCK from the 320 controller to possibly force it into synchronous slot command timing mode
-- moving the 286 into a PLCC socket for being able to swap the CPU
+- moving the 286 into a PLCC socket for being able to swap the CPU  
+Please take note of the fact that including series termination resistors does not mean that these must be populated.
+Whether these will remain a part of the recommended build will depend on testing and measurements.
+I will update depending on the findings and a definitive partslist will follow from those. Possibly certain footprints will be changed to zero ohm resistors.
 
 # PicoGUS  
 I have asked polpo and he has kindly given me permission to add the PicoGUS into the design.  
 This will be experimental at first to use some PLCC logic to drive the PicoGUS control.  
 
-So the PicoGUS is created by polpo here on GitHub  
+The PicoGUS is created by polpo here on GitHub  
 https://github.com/polpo/picogus  
 Licensing conditions for PicoGUS parts apply as defined in the picogus repository.  
 
 The license of PicoGUS applies to all parts of PicoGUS integrated into this system:  
-The hardware portions of the picogus repository (hw/ directory) are licensed under the CERN OHL version 2, permissive.  
+The hardware portions of the PicoGUS repository (hw/ directory) are licensed under the CERN OHL version 2, permissive.  
 
-The software portions of this repository (sw/, pgusinit/ directories) as a collection are licensed under the GNU GPL version 2. Some files are individually dual-licensed under BSD or MIT licenses – see the license in the file headers for details.  
+The software portions of the PicoGUS repository (sw/, pgusinit/ directories) as a collection are licensed under the GNU GPL version 2. Some files are individually dual-licensed under BSD or MIT licenses – see the license in the file headers for details.  
 
 PicoGUS is always under development by polpo so it's always in a beta status.  
-When building this mainboard project, the intellectual property and conditions of the PicoGUS project must be respected and observed. Not to be sold for profit and design is "as-is" without any guarantees. Builders must take their own responsibility in debugging the PicoGUS from the provided information in the PicoGUS repo.  
+When building this mainboard project, the intellectual property and conditions of the PicoGUS project must be respected and observed.  
+Not to be sold for profit and design is "as-is" without any guarantees.   
+Builders must take their own responsibility in debugging the PicoGUS from the provided information in the PicoGUS repo.  
 
-Only build the PicoGUS parts of you agree to the PicoGUS project conditions of polpo, same as if you were building a separate PicoGUS.  
+Only build the PicoGUS parts of you agree with the conditions of the PicoGUS project by polpo, same as if you were building a stand alone PicoGUS.  
 Many thanks go out to polpo for agreeing with PicoGUS to be included in this project!  
 Be sure to check out his repo because he is always developing the PicoGUS further!  
 
+Further features currently being added to the design:  
+A larger CPLD will be used:
+- primary and secondary IDE port
+- POST LED display
+- separating the BUS Clock of the 320 system controller to its own oscillator so we may freely swap other oscillators without affecting the rest of the system.  Speeding up the BUS Clock to the 331 will be under investigation and may improve VGA read and write cycle speeds which may increase gaming speeds.
+- the system will be adaptable to feature a 286 and/or 386SX where a 386SX can be added or removed using a plug-in module
+- we can test the differences between the 286 and 386SX
+- more CPLD pins available to support PicoGUS control and other system functions, continuing to work on and verifying the adapted PicoGUS design areas
 
+# Big news!  
+A TOPCAT AMI BIOS has been adapted by sqpat to make use of a more advanced AMI BIOS previously developed for a TOPCAT 386SX system.  
+This has led to a substantial speed up of the REV1 TOPCAT 286 system to run RealDOOM at 6.85 frames per second, 8.6 frames per second in 3D bench.  
+At maximum 22.4 MHz the REV1 ATX TOPCAT system also featured in my repositories can perform 14922 writes and 11115 reads per millisecond to system DRAM.  
+Many thanks go out to sqpat who has made a repo for his work on the disassembled code:  
+https://github.com/sqpat/topcatbios
+Check the code for various comments and results of his code examination!  
+So we now have a much faster and more responsive TOPCAT 286 system with the REV1 system capable of running at 22.4MHz!  
 
+I am currently working on the schematic to add and update more circuit areas and also doing verifications and going over of the entire design.
 
+Last update:  
 
-
+18-4-2026

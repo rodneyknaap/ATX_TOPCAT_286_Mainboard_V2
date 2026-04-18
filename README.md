@@ -80,8 +80,8 @@ A TOPCAT AMI BIOS has been adapted by sqpat to make use of a more advanced AMI B
 This has led to a substantial speed up of the REV1 TOPCAT 286 system to run RealDOOM at 6.85 frames per second, 8.6 frames per second in 3D bench.  
 At maximum 22.4 MHz the REV1 ATX TOPCAT system also featured in my repositories can perform 14922 writes and 11115 reads per millisecond to system DRAM.  
 Many thanks go out to sqpat who has made a repo for his work on the disassembled code:  
-https://github.com/sqpat/topcatbios
-Check the code for various comments and results of his code examination!  
+https://github.com/sqpat/topcatbios  
+If interested, do check out the code for various comments by sqpat and results of his code examination!  
 So we now have a much faster and more responsive TOPCAT 286 system with the REV1 system capable of running at 22.4MHz!  
 
 I am currently working on the schematic to add and update more circuit areas and also doing verifications and going over of the entire design.

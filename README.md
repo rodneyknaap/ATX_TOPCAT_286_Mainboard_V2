@@ -94,6 +94,7 @@ Feature list for this design:
 - optional series termination resistor footprints present for possibly improving edges of fast signals such as DRAM address and controls
 
 Using 4 megabit 4 bit wide DRAMs on 72 pin SIMMs reduces the DRAM and CPU data bus load by a substantial factor.  
+
 Please take clear note of the fact that including series termination resistors does not mean that these must be populated.  
 Whether these will remain a part of the recommended build will depend on testing and measurements.  
 I will update depending on the findings and a definitive partslist regarding the recommended series termination footprints will follow from those. Possibly certain footprints will be changed to zero ohm resistors if no improvement was found.

@@ -3,7 +3,7 @@ REV2 design for the VLSI TOPCAT ATX 286 mainboard
 
 A rough preview of the design in progress, to be updated after various changes are added:   
 
-![A photo of the TOPCAT REV2 design in progress](TOPCAT_286_MAINBOARD_REV2_IN_PROGRESS_01.png)  
+![A photo of the TOPCAT REV2 design in progress](TOPCAT_286_MAINBOARD_REV2_IN_PROGRESS_03.png)  
 
 
 After building the somewhat limited version of the TOPCAT "V1", we now have a proof of concept for how to create a 286 system with the VLSI TOPCAT chipset.  

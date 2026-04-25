@@ -88,6 +88,7 @@ The advanced AMI BIOS allows us to fully tweak the TOPCAT chipset to maximize th
 The design work is currently in progress but nearing completion.  
 
 Feature list for this design:  
+- micro ATX board size qualifying as a normal and not large board size with JLCPCB
 - verified IO decoder design areas inherited from REV3E
 - support for removable 386SX module using pinheader connectors
 - CPLD logic controls 286/386SX mode switch using single header input pin for switch or jumper

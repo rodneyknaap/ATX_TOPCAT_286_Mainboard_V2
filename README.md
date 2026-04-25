@@ -31,18 +31,6 @@ When connecting this system to a computer network which contains stored informat
 
 When building this project, the builder assumes personal responsibility for troubleshooting it and using the necessary care and expertise to make it function properly as defined by the design. You can email me with questions, but I will reply only if I have time and if I find the question to be valid. Which will probably also lead to an update here. I want to primarily dedicate my time to new project development, I am not able to do any user support, so that's why I provide the elaborate info here which will be expanded if needed.
 
-# Design details  
-After building the first version of a TOPCAT 286 system, it's time to design a second improved version which includes a number of changes:  
-- adding series termination resistor footprints for possibly improving edges of signals going to the DRAMs
-- 72 pin DRAM modules instead of 30 pin ones
-- using 4 megabit 4 bit wide DRAMs on SIMMs will reduce the DRAM address and control bus load
-- adding series termination resistors for the fast clocks
-- adding the possibility to remove the BUSCLOCK from the 320 controller to possibly force it into synchronous slot command timing mode
-- moving the 286 into a PLCC socket for being able to swap the CPU  
-Please take note of the fact that including series termination resistors does not mean that these must be populated.
-Whether these will remain a part of the recommended build will depend on testing and measurements.
-I will update depending on the findings and a definitive partslist will follow from those. Possibly certain footprints will be changed to zero ohm resistors.
-
 # PicoGUS  
 I have asked polpo and he has kindly given me permission to add the PicoGUS into the design.  
 
@@ -88,7 +76,9 @@ The advanced AMI BIOS allows us to fully tweak the TOPCAT chipset to maximize th
 The design work is currently in progress but nearing completion.  
 
 Feature list for this design:  
+- 286 featured in a PLCC socket for being able to swap the CPU  
 - micro ATX board size qualifying as a normal and not large board size with JLCPCB
+- two 72 pin SIMM DRAM modules
 - verified IO decoder design areas inherited from REV3E
 - support for removable 386SX module using pinheader connectors
 - CPLD logic controls 286/386SX mode switch using single header input pin for switch or jumper
@@ -100,18 +90,26 @@ Feature list for this design:
 - USB to serial mouse using RP2040 by limeprogramming
 - PicoGUS by polpo integrated (CPLD support logic and access speed not yet tested)
 - BUSCLK on separate oscillator which can be swapped or possibly removed for experimental testing
+- optional series termination resistors added for the fast clocks
+- optional series termination resistor footprints present for possibly improving edges of fast signals such as DRAM address and controls
+
+Using 4 megabit 4 bit wide DRAMs on 72 pin SIMMs reduces the DRAM and CPU data bus load by a substantial factor.  
+Please take clear note of the fact that including series termination resistors does not mean that these must be populated.  
+Whether these will remain a part of the recommended build will depend on testing and measurements.  
+I will update depending on the findings and a definitive partslist regarding the recommended series termination footprints will follow from those. Possibly certain footprints will be changed to zero ohm resistors if no improvement was found.
 
 So we are using the dual IDE port IO decoder from REV3E which has operated flawlessly in the REV3D.
-From now on we can monitor the POST reporting on port 80 by AMI BIOS on the POST LED displays.
+From now on we can also monitor the POST reporting on port 80 by AMI BIOS on the POST LED displays present on the board.  
 
 We switch over the system between 286 and 386SX using CPLD logic. This allows us to seamlessly change the CPU mode and CPU RESET control of the TOPCAT and direct the appropriate CPU to the RESET. In addition we have a double space ROM which provides us with two system ROM banks which can be switched over by the CPLD. The idea is to also control the ROM bank by the same mechanism which selects the CPU, so the system is fully adaptable between 286 and 386SX where we also can use separate system BIOS. In addition, the system ROM bank can be used in other ways to switch between two BIOS versions independent from CPU selection if desired.  
 
-## Option ROM support
+## Option ROM support  
 The TOPCAT itself internally doesn't support option ROM BIOS chip select decoding. So the option ROM needs to be added to a TOPCAT system as if it were on a slot card. So the ROM is wired to the system data bus to be able to support this in a compatible way as the TOPCAT directs the data bus. The option ROM is enabled only sub 1MB address range as the PC/AT offers using /SMEMR and then decoded from this range in order to need less address lines to the CPLD. The option ROM offers 64KB of option ROM space which does not necessarily need to be adjacent in the memory map. Where the ROM is inserted into the memory map is freely reprogrammable within the A15 address line selection the CPU does in a certain memory area. Typical use way will be to insert half of the ROM(32KB) into the 0C8000h - 0CFFFFh area.
 Theoretically a VGA BIOS can be programmed into the ROM for a custom VGA solution such as FPGA based VGA output using its own VGA BIOS, and the CPLD can be reprogrammed to enable the option ROM in this area of the memory map.  
 
 The LPT1 port is inherited from the REV3D and REV3E designs however this has not been tested yet. The REV3D/E and LPT design here is partially implemented externally with two TTL ICs because of limited 6 different output enable function capability of the CPLD. The decoding and control signals of the LPT port are all handled by the CPLD internally.  
-A flatcable wire needs to be soldered to connect the port. In this case I have separated the LPT data port and control port into two separate headers because of the limited PCB space available in that board area where a single longer header cannot fit.  
+
+Two flatcable wires need to be soldered to connect the 25 pin female LPT D-connector to the board. In this case I have separated the LPT data port and control port into two separate headers because of the limited PCB space available in that board area where a single longer header cannot fit.  
 Using the two 10 pin flatcable boxheaders and cable solution is mostly straight forward however additional care must be observed to clearly label the connectors making sure that these are always inserted into the correct headers when using the printer port. If the LPT port is not used, the TTL chips can be left off the board, and IO pins from the CPLD present on the 10 pin LPT control header can be used for other purposes. Generally the TTL chip clocked data register can also be repurposed for various other IO port operations and experiments if the user likes. So the data output is clocked and output enable controlled, the data input can be directly read by the CPU from the header data bits using a single output enable.
 
 Further updates will follow.

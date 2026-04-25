@@ -1,10 +1,9 @@
 # ATX_TOPCAT_286_Mainboard_V2  
 REV2 design for the VLSI TOPCAT ATX 286 mainboard  
 
-A rough preview of the design in progress, to be updated after various changes are added:   
+A more elaborate preview of the design in progress, to be updated after final changes are added:   
 
 ![A photo of the TOPCAT REV2 design in progress](TOPCAT_286_MAINBOARD_REV2_IN_PROGRESS_03.png)  
-
 
 After building the somewhat limited version of the TOPCAT "V1", we now have a proof of concept for how to create a 286 system with the VLSI TOPCAT chipset.  
 sqpat sent us some VLSI chips and Intel versions of the 331 companion chip. I have tested these on a MSI TOPCAT 386SX board so they are valid equivalents for the VLSI 331.  
@@ -46,7 +45,6 @@ I will update depending on the findings and a definitive partslist will follow f
 
 # PicoGUS  
 I have asked polpo and he has kindly given me permission to add the PicoGUS into the design.  
-This will be experimental at first to use some PLCC logic to drive the PicoGUS control.  
 
 The PicoGUS is created by polpo here on GitHub  
 https://github.com/polpo/picogus  
@@ -65,17 +63,18 @@ Builders must take their own responsibility in debugging the PicoGUS from the pr
 Only build the PicoGUS parts of you agree with the conditions of the PicoGUS project by polpo, same as if you were building a stand alone PicoGUS.  
 Many thanks go out to polpo for agreeing with PicoGUS to be included in this project!  
 Be sure to check out his repo because he is always developing the PicoGUS further!  
+My design is non standard so please don't contact polpo to get support for this deviated design, and await my testing of the first build done this way.
 
-Further features currently being added to the design:  
-A larger CPLD will be used:
-- primary and secondary IDE port
-- POST LED display
-- separating the BUS Clock of the 320 system controller to its own oscillator so we may freely swap other oscillators without affecting the rest of the system.  Speeding up the BUS Clock to the 331 will be under investigation and may improve VGA read and write cycle speeds which may increase gaming speeds.
-- the system will be adaptable to feature a 286 and/or 386SX where a 386SX can be added or removed using a plug-in module
-- we can test the differences between the 286 and 386SX
-- more CPLD pins available to support PicoGUS control and other system functions, continuing to work on and verifying the adapted PicoGUS design areas
+My integration of the PicoGUS will be experimental at first to use PLCC logic to drive the PicoGUS control.  
+So before testing there is no verification of this design. The CPLD is fast and reprogrammable so possibly modifications can be done in the future by reprogramming the CPLD support logic. It is my hope that having this in place, we may succeed to get the PicoGUS to work correctly.
+The bus switch logic is really fast as long as the OE function of the bus switch is not used so we don't get any on/off time involved in the timing.
+Bus switches used in the PicoGUS to multiplex between address and data bus to reduce pin usage on the RP2040 side are bidirectional.
+What level of IO data transfer commands are possible will depend on testing.
+The IO reads and writes are both by the CPU and by the 8 bit DMAC in this implementation.
+I have integrated the two RP2040 modules to the system RESET procedure so each time the system is RESET, the RP2040s also are RESET on the RUN input.  
+RP2040 RESET is driven by separate output on the CPLD so we can modify or expand the RESET behavior if needed. For example using a software controlled RESET for the RP2040s.  
 
-# Big news!  
+# Big news regarding AMI BIOS support for the 286 CPU!  
 A TOPCAT AMI BIOS has been adapted by sqpat to make use of a more advanced AMI BIOS previously developed for a TOPCAT 386SX system.  
 This has led to a substantial speed up of the REV1 TOPCAT 286 system to run RealDOOM at 6.85 frames per second, 8.6 frames per second in 3D bench.  
 At maximum 22.4 MHz the REV1 ATX TOPCAT system also featured in my repositories can perform 14922 writes and 11115 reads per millisecond to system DRAM.  
@@ -85,8 +84,37 @@ If interested, do check out the code for various comments by sqpat and results o
 So we now have a much faster and more responsive TOPCAT 286 system with the REV1 system capable of running at 22.4MHz!  
 The advanced AMI BIOS allows us to fully tweak the TOPCAT chipset to maximize the performance as far is it is able to go!  
 
-I am currently working on the schematic to add and update more circuit areas and also doing verifications and going over of the entire design.
+# Updated feature list of this second revision  
+The design work is currently in progress but nearing completion.  
+
+Feature list for this design:  
+- verified IO decoder design areas inherited from REV3E
+- support for removable 386SX module using pinheader connectors
+- CPLD logic controls 286/386SX mode switch using single header input pin for switch or jumper
+- optional dual system BIOS supported for 286/386SX using 1 megabit flash ROM
+- 64KB option ROM space support on system data bus using the CPLD
+- primary and secondary IDE port
+- POST LED display
+- LPT port (from REV3E design, not yet tested, needs connector wiring)
+- USB to serial mouse using RP2040 by limeprogramming
+- PicoGUS by polpo integrated (CPLD support logic and access speed not yet tested)
+- BUSCLK on separate oscillator which can be swapped or possibly removed for experimental testing
+
+So we are using the dual IDE port IO decoder from REV3E which has operated flawlessly in the REV3D.
+From now on we can monitor the POST reporting on port 80 by AMI BIOS on the POST LED displays.
+
+We switch over the system between 286 and 386SX using CPLD logic. This allows us to seamlessly change the CPU mode and CPU RESET control of the TOPCAT and direct the appropriate CPU to the RESET. In addition we have a double space ROM which provides us with two system ROM banks which can be switched over by the CPLD. The idea is to also control the ROM bank by the same mechanism which selects the CPU, so the system is fully adaptable between 286 and 386SX where we also can use separate system BIOS. In addition, the system ROM bank can be used in other ways to switch between two BIOS versions independent from CPU selection if desired.  
+
+## Option ROM support
+The TOPCAT itself internally doesn't support option ROM BIOS chip select decoding. So the option ROM needs to be added to a TOPCAT system as if it were on a slot card. So the ROM is wired to the system data bus to be able to support this in a compatible way as the TOPCAT directs the data bus. The option ROM is enabled only sub 1MB address range as the PC/AT offers using /SMEMR and then decoded from this range in order to need less address lines to the CPLD. The option ROM offers 64KB of option ROM space which does not necessarily need to be adjacent in the memory map. Where the ROM is inserted into the memory map is freely reprogrammable within the A15 address line selection the CPU does in a certain memory area. Typical use way will be to insert half of the ROM(32KB) into the 0C8000h - 0CFFFFh area.
+Theoretically a VGA BIOS can be programmed into the ROM for a custom VGA solution such as FPGA based VGA output using its own VGA BIOS, and the CPLD can be reprogrammed to enable the option ROM in this area of the memory map.  
+
+The LPT1 port is inherited from the REV3D and REV3E designs however this has not been tested yet. The REV3D/E and LPT design here is partially implemented externally with two TTL ICs because of limited 6 different output enable function capability of the CPLD. The decoding and control signals of the LPT port are all handled by the CPLD internally.  
+A flatcable wire needs to be soldered to connect the port. In this case I have separated the LPT data port and control port into two separate headers because of the limited PCB space available in that board area where a single longer header cannot fit.  
+Using the two 10 pin flatcable boxheaders and cable solution is mostly straight forward however additional care must be observed to clearly label the connectors making sure that these are always inserted into the correct headers when using the printer port. If the LPT port is not used, the TTL chips can be left off the board, and IO pins from the CPLD present on the 10 pin LPT control header can be used for other purposes. Generally the TTL chip clocked data register can also be repurposed for various other IO port operations and experiments if the user likes. So the data output is clocked and output enable controlled, the data input can be directly read by the CPU from the header data bits using a single output enable.
+
+Further updates will follow.
 
 Last update:  
 
-18-4-2026
+25-4-2026

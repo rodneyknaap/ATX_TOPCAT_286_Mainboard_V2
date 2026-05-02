@@ -75,7 +75,8 @@ So we now have a much faster and more responsive TOPCAT 286 system with the REV1
 The advanced AMI BIOS allows us to fully tweak the TOPCAT chipset to maximize the performance as far is it is able to go!  
 
 # Updated feature list of this second revision  
-The design work is currently in progress but nearing completion.  
+The design work on the mainboard PCB layout is now finished.  
+The gerber files will be generated and uploaded shortly, as well as several support files such as component placement diagrams.
 
 Feature list for this design:  
 - 286 featured in a PLCC socket for being able to swap the CPU  
@@ -104,19 +105,22 @@ I will update depending on the findings and a definitive partslist regarding the
 So we are using the dual IDE port IO decoder from REV3E which has operated flawlessly in the REV3D.
 From now on we can also monitor the POST reporting on port 80 by AMI BIOS on the POST LED displays present on the board.  
 
-We switch over the system between 286 and 386SX using CPLD logic. This allows us to seamlessly change the CPU mode and CPU RESET control of the TOPCAT and direct the appropriate CPU to the RESET. In addition we have a double space ROM which provides us with two system ROM banks which can be switched over by the CPLD. The idea is to also control the ROM bank by the same mechanism which selects the CPU, so the system is fully adaptable between 286 and 386SX where we also can use separate system BIOS. In addition, the system ROM bank can be used in other ways to switch between two BIOS versions independent from CPU selection if desired.  
+We switch over the system between 286 and 386SX using CPLD logic. This allows us to seamlessly change the CPU mode and CPU RESET control of the TOPCAT and direct the appropriate CPU to the RESET. In addition we have a double capacity system ROM which provides us with two system ROM banks which can be switched over by the CPLD. The idea is to also control the ROM bank by the same mechanism which selects the CPU, so the system is fully adaptable between 286 and 386SX where we also can use separate system BIOS. In addition, the system ROM bank can be used in other ways to switch between two BIOS versions independent from CPU selection if desired.  
 
 ## Option ROM support  
-The TOPCAT itself internally doesn't support option ROM BIOS chip select decoding. So the option ROM needs to be added to a TOPCAT system as if it were on a slot card. So the ROM is wired to the system data bus to be able to support this in a compatible way as the TOPCAT directs the data bus. The option ROM is enabled only sub 1MB address range as the PC/AT offers using /SMEMR and then decoded from this range in order to need less address lines to the CPLD. The option ROM offers 64KB of option ROM space which does not necessarily need to be adjacent in the memory map. Where the ROM is inserted into the memory map is freely reprogrammable within the A15 address line selection the CPU does in a certain memory area. Typical use way will be to insert half of the ROM(32KB) into the 0C8000h - 0CFFFFh area.
-Theoretically a VGA BIOS can be programmed into the ROM for a custom VGA solution such as FPGA based VGA output using its own VGA BIOS, and the CPLD can be reprogrammed to enable the option ROM in this area of the memory map.  
+The TOPCAT itself internally doesn't support option ROM BIOS chip select decoding. So the option ROM needs to be added to a TOPCAT system as if it were on a slot card. So the ROM is wired to the system data bus to be able to support this in a compatible way as the TOPCAT directs the data bus. The option ROM is enabled only sub 1MB address range as the PC/AT offers using /SMEMR and then decoded from this range in order to need less address lines on the CPLD. The option ROM offers 64KB of option ROM space which does not necessarily need to be adjacent in the memory map. Where the ROM is inserted into the memory map is freely reprogrammable within the A15 address line selection the CPU does in a certain memory area. Typical use way will be to insert half of the ROM(32KB) into the 0C8000h - 0CFFFFh area.
+Theoretically a VGA BIOS can be programmed into the ROM for a custom VGA solution such as FPGA based VGA output using its own VGA BIOS, and the CPLD can be reprogrammed to enable the option ROM in this area of the memory map. In that case the VGA controller should not offer any BIOS enabling in its internal memory mapping as applied on the system bus.
 
 The LPT1 port is inherited from the REV3D and REV3E designs however this has not been tested yet. The REV3D/E and LPT design here is partially implemented externally with two TTL ICs because of limited 6 different output enable function capability of the CPLD. The decoding and control signals of the LPT port are all handled by the CPLD internally.  
 
-Two flatcable wires need to be soldered to connect the 25 pin female LPT D-connector to the board. In this case I have separated the LPT data port and control port into two separate headers because of the limited PCB space available in that board area where a single longer header cannot fit.  
-Using the two 10 pin flatcable boxheaders and cable solution is mostly straight forward however additional care must be observed to clearly label the connectors making sure that these are always inserted into the correct headers when using the printer port. If the LPT port is not used, the TTL chips can be left off the board, and IO pins from the CPLD present on the 10 pin LPT control header can be used for other purposes. Generally the TTL chip clocked data register can also be repurposed for various other IO port operations and experiments if the user likes. So the data output is clocked and output enable controlled, the data input can be directly read by the CPU from the header data bits using a single output enable driven by the CPLD.
+Two flatcable wires need to be soldered to connect the 25 pin female LPT D-connector to the board. In this case I have separated the LPT data port and control port into two separate headers because of the limited PCB space available in that board area where a single longer header cannot fit. In addition the two TTL chips used to complete the CPLD LPT port logic are located on top and bottom layers to make everything fit onto the board space.  
+
+Using the two 10 pin flatcable boxheaders and cable solution is mostly straight forward however additional care must be observed to clearly label the connectors making sure that these are always inserted into the correct headers when using the printer port.  
+
+If the LPT port is not used, the TTL chips can be left off the board, and IO pins from the CPLD present on the 10 pin LPT control header can be used for other purposes. Generally the TTL chip clocked data register could still be populated because it can also be repurposed for various other IO port operations and experiments if the user likes. So the data output is clocked and output enable controlled, the data input can be realized with the TTL transceiver and directly read by the CPU from the header data bits using the output enable driven by the CPLD.
 
 Further updates will follow.
 
 Last update:  
 
-25-4-2026
+2-5-2026

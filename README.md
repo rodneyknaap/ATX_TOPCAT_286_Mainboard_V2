@@ -55,7 +55,7 @@ Many thanks go out to polpo for agreeing with PicoGUS to be included in this pro
 Be sure to check out his repo because he is always developing the PicoGUS further!  
 My design is non standard so please don't contact polpo to get support for this deviated design, and await my testing of the first build done this way.
 
-My integration of the PicoGUS will be experimental at first to use PLCC logic to drive the PicoGUS control.  
+My integration of the PicoGUS will be experimental at first to use CPLD logic to drive the PicoGUS control.  
 So before testing there is no verification of this design. The CPLD is fast and reprogrammable so possibly modifications can be done in the future by reprogramming the CPLD support logic. It is my hope that having this in place, we may succeed to get the PicoGUS to work correctly.
 The bus switch logic is really fast as long as the OE function of the bus switch is not used so we don't get any on/off time involved in the timing.
 Bus switches used in the PicoGUS to multiplex between address and data bus to reduce pin usage on the RP2040 side are bidirectional.

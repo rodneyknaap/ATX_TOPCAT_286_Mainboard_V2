@@ -131,9 +131,11 @@ A few example photos of the module as prepared and inserted into the mainboard p
 
 ![RP2040_LIMEPROGRAMMING_BACK](RP_PICO_MOUSE_SPEED_JUMPER.jpg)   
 
+# CPLD project will be released shortly  
+The CPLD quartus project will be released shortly and I will write more details here after the project is finished and verified with the mainboard connectivity.  
 
 Further updates will follow.
 
 Last update:  
 
-2-5-2026
+16-5-2026

@@ -119,6 +119,19 @@ Using the two 10 pin flatcable boxheaders and cable solution is mostly straight 
 
 If the LPT port is not used, the TTL chips can be left off the board, and IO pins from the CPLD present on the 10 pin LPT control header can be used for other purposes. Generally the TTL chip clocked data register could still be populated because it can also be repurposed for various other IO port operations and experiments if the user likes. So the data output is clocked and output enable controlled, the data input can be realized with the TTL transceiver and directly read by the CPU from the header data bits using the output enable driven by the CPLD.
 
+# The USB to serial mouse adapter by Limeprogramming  
+This adapter is proven to operate equally to any modern PC using a USB mouse receiver, tested with a cheap but reliable Logictech serial mouse.  
+The RP2040 needs to be soldered to a single angled pin strip which can mate with a double female pinsocket connector on the board. In addition it needs a bridge to be soldered onto the mouse speed jumper GPIO pin connecting it to GND and selecting the proper mouse speed. See my example photos for what I used, and recommended for your initial tests, likely to be the version mouse speed you may continue to use. In addition the USB + and - signal pins need to be connected from the RP2040 pads to a two pin female header which you can plug into the two pin male pinheader on the board next to the RP2040 connector. Finally you need to solder the VCC pins of the RP2040 to a single wire, plugging into the two VCC holes of the PCB female pinsocket. Otherwise the photos also illustrate the process of preparing and connecting the RP2040. This needs to be programmed with the Limeprogramming project file. His GitHub for the project is here:
+https://github.com/LimeProgramming/USB-serial-mouse-adapter  
+The file to drop into the RP2040 is in this folder:  
+https://github.com/LimeProgramming/USB-serial-mouse-adapter/tree/main/binary  
+
+A few example photos of the module as prepared and inserted into the mainboard pinsocket:  
+![RP2040_LIMEPROGRAMMING](USBMOUSE_RP_PICO_INSTALLED.jpg)   
+
+![RP2040_LIMEPROGRAMMING_BACK](RP_PICO_MOUSE_SPEED_JUMPER.jpg)   
+
+
 Further updates will follow.
 
 Last update:  

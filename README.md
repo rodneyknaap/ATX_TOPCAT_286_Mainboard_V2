@@ -149,14 +149,17 @@ Here is the cable inserted into the tiny "USB Blaster REV C" for programming the
 As seen here in the photo, I indicated pin 1 by using a longer connector strip where the unused section with pins removed protrudes at the opposite side of pin 1, so the "edge" wire is always pin 1, as seen here in the photo above.  
 
 # A special caution when you suspect your CPLD to be recycled  
-If you got your CPLD from a recycler, this can be evident from the chip looking like it has been soldered before, that may mean that a programming is present in the chip, which can then conflict with the other chips on the board, so a special procedure is advised for such chips suspected to contain programming:  
+If you got your CPLD from a recycler, this can be evident from the chip looking like it has been soldered before, that may mean that programming is present in the chip, which can then conflict with the other chips on the board, so a special procedure is advised for such chips suspected to contain programming:  
 - first solder the ATX PSU connector and all components of the ATX circuit on the bottom right of the board (top ICs, capacitor and bottom resistors, capacitors and diode), as well as the VCC fuse and for example one ELCO next to the ATX connector on VCC.  
 - solder the POWER and RESET two pin headers into the board, and add a jumper to short the RESET header until all further assembly and programming is done.  
 - then solder the CPLD to the board, including the JTAG header pinstrip  
-- power on the board  
-- program the specific quartus project POF(208 pin) file into the CPLD  
+- power on the board (VCC needs to power the CPLD in order to program it, or the software will fail the programming sequence)
+- immediately program the specific quartus project POF(208 pin) file into the CPLD  
 - power off the board after the programming sequence is completed  
-- continue normally with assembly of your board
+- continue normally with assembly and testing of your board
+If previous unknown programming is suspected to be present in the CPLD, assemble it first without other ICs like the TOPCAT chips and CPU etc., if possible.
+When pressing the "start" button in the quartus programmer window, the CPLD should tri-state all its pins except the JTAG I/O pins, which will immediately disable the previous programming.
+If JTAG is not responding, this may indicate that the JTAG IO pins are programmed as normal IO pins, disabling the JTAG function of the CPLD. In that case I suggest posting in the VCF thread where we can attempt to find a solution to externally override the IO pin function of the JTAG pins and switching back into JTAG support mode of the CPLD.
 
 Further updates will follow.
 

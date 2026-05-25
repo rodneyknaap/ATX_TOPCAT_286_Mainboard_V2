@@ -131,11 +131,35 @@ A few example photos of the module as prepared and inserted into the mainboard p
 
 ![RP2040_LIMEPROGRAMMING_BACK](RP_PICO_MOUSE_SPEED_JUMPER.jpg)   
 
-# CPLD project will be released shortly  
-The CPLD quartus project will be released shortly and I will write more details here after the project is finished and verified with the mainboard connectivity.  
+# CPLD programming details  
+This requires Quartus II version 13.0 SP1.
+You will need a ALTERA USB blaster programmer for the 208 pin CPLD directly from quartus 13.0 SP1 by loading the .QPF project file in quartus by double clicking in the folder. First compile the project by pressing the triangle "play" button. After full compilation is completed, you can then press the programmer icon. There you can define the programming hardware using the "hardware setup" button. Next highlight the file line in the file area, and on the left click on "change file", this dialog may take a while to produce the next window, there go to the "output files" directory inside your current quartus project, and choose the .POF file. Make sure to check that date and time match your time of just compiling the project a moment ago before confirming the file. Next to the file, check the boxes for "program/configure" and "verify". Next power up the system and click on "start" button. The dialog should show green in the "progress" section, running up until 100%. Sometimes the programmer communication from quartus may have some issue, which usually can be fixed by trying the "start" button again. Sometimes it's necessary to replug the USB connector into the USB blaster, and do the "hardware setup" again using the button. Finally the USB blaster will do the programming possibly after a little fiddling and retry.  
+
+# CPLD JTAG cable  
+A custom JTAG cable can be used. On the programmer side, you can use a 10 pin flatcable connector and solder the flatcable to a 6 pin pinheader using some more solid flexible wires which you can solder and use some heat shrink tubing to solidify the attachment to the flatcable ends. Next the more solid flexible wires can be soldered to the female single row pinheader that goes on the JTAG pins on the board, again using heat shrink tubing to ensure the wires won't bend and snap off easily from the connector.  
+Pinouts of the cable are as follows:  
+
+![JTAG_PROGRAMMING_CABLE](JTAG_CABLE.png)  
+
+Here is the cable inserted into the tiny "USB Blaster REV C" for programming the larger 208 pin ALTERA CPLDS:  
+![JTAG_PROGRAMMING_CABLE](JTAG_CABLE_2.jpg)  
+
+![JTAG_PROGRAMMING_CABLE](JTAG_CABLE_3.jpg)  
+
+As seen here in the photo, I indicated pin 1 by using a longer connector strip where the unused section with pins removed protrudes at the opposite side of pin 1, so the "edge" wire is always pin 1, as seen here in the photo above.  
+
+# A special caution when you suspect your CPLD to be recycled  
+If you got your CPLD from a recycler, this can be evident from the chip looking like it has been soldered before, that may mean that a programming is present in the chip, which can then conflict with the other chips on the board, so a special procedure is advised for such chips suspected to contain programming:  
+- first solder the ATX PSU connector and all components of the ATX circuit on the bottom right of the board (top ICs, capacitor and bottom resistors, capacitors and diode), as well as the VCC fuse and for example one ELCO next to the ATX connector on VCC.  
+- solder the POWER and RESET two pin headers into the board, and add a jumper to short the RESET header until all further assembly and programming is done.  
+- then solder the CPLD to the board, including the JTAG header pinstrip  
+- power on the board  
+- program the specific quartus project POF(208 pin) file into the CPLD  
+- power off the board after the programming sequence is completed  
+- continue normally with assembly of your board
 
 Further updates will follow.
 
 Last update:  
 
-16-5-2026
+25-5-2026

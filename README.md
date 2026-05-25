@@ -162,12 +162,14 @@ When pressing the "start" button in the quartus programmer window, the CPLD shou
 If JTAG is not responding, this may indicate that the JTAG IO pins are programmed as normal IO pins, disabling the JTAG function of the CPLD. In that case I suggest posting in the VCF thread where we can attempt to find a solution to externally override the IO pin function of the JTAG pins and switching back into JTAG support mode of the CPLD.
 
 # Current status of the project  
-The PCB layout has been updated (update U1) to add a few missing address lines to the CPLD. If you manufactured a board already from the first release, check my VCF thread for details how to wire the address lines from the slot to the IO decoder CPLD on a few free pin vias using a small piece of flatcable.
-The project is being built by sqpat, check his updates in the VCF thread for his assembly and testing work.
-I will also order the TOPCAT REV2 and transfer my REV1 components to the new board so I can fully test it myself as well.
-More details from assembly, debugging and testing the project will follow here as soon as I have a board available to assemble.
+The PCB layout has been updated (update U1) to add a few missing address lines to the CPLD. If you manufactured a board already from the first release, check my VCF thread for details how to wire the address lines from the slot to the IO decoder CPLD on a few free pin vias using a small piece of flatcable.  
+The project is being built by sqpat, check his updates in the VCF thread for his assembly and testing work.  
+I will also order the TOPCAT REV2 PCB made and I will transfer my REV1 components to the new board so I can fully test it myself as well.  
+Regardless, I will be testing with the Intel 331 chip and VLSI 320A TOPCAT chip revision, which has shown indications to be able to operate faster than the normal 320 version.  
 
-Further updates will follow.
+More details from assembly, debugging and testing the project will follow here as soon as I have a board available to assemble.  
+
+Further updates will follow.  
 
 Last update:  
 

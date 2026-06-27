@@ -3,9 +3,9 @@ REV2 design for the VLSI TOPCAT ATX 286 mainboard
 
 A few images of the finished design:   
 
-![TOP layer of the TOPCAT V2 mainboard](TOPCAT_286_MAINBOARD_REV2_TOP.png)  
+![TOP layer of the TOPCAT V2 mainboard](TOPCAT_286_MAINBOARD_REV2_U2_TOP.png)  
 
-![BOTTOM layer of the TOPCAT V2 mainboard](TOPCAT_286_MAINBOARD_REV2_BOTTOM.png)  
+![BOTTOM layer of the TOPCAT V2 mainboard](TOPCAT_286_MAINBOARD_REV2_U2_BOTTOM.png)  
 
 After building the somewhat limited version of the TOPCAT "V1", we now have a proof of concept for how to create a 286 system with the VLSI TOPCAT chipset.  
 sqpat sent us some VLSI chips and Intel versions of the 331 companion chip. I have tested these on a MSI TOPCAT 386SX board so they are valid equivalents for the VLSI 331.  

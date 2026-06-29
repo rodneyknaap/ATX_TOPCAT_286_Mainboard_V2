@@ -5,7 +5,7 @@ A few images of the finished design:
 
 ![TOP layer of the TOPCAT V2 mainboard](TOPCAT_286_MAINBOARD_REV2_U2_TOP.png)  
 
-![BOTTOM layer of the TOPCAT V2 mainboard](TOPCAT_286_MAINBOARD_REV2_U2_BOTTOM.png)  
+![BOTTOM layer of the TOPCAT V2 mainboard](TOPCAT_286_MAINBOARD_REV2-U2_BOTTOM.png)  
 
 After building the somewhat limited version of the TOPCAT "V1", we now have a proof of concept for how to create a 286 system with the VLSI TOPCAT chipset.  
 sqpat sent us some VLSI chips and Intel versions of the 331 companion chip. I have tested these on a MSI TOPCAT 386SX board so they are valid equivalents for the VLSI 331.  
@@ -162,15 +162,23 @@ When pressing the "start" button in the quartus programmer window, the CPLD shou
 If JTAG is not responding, this may indicate that the JTAG IO pins are programmed as normal IO pins, disabling the JTAG function of the CPLD. In that case I suggest posting in the VCF thread where we can attempt to find a solution to externally override the IO pin function of the JTAG pins and switching back into JTAG support mode of the CPLD.
 
 # Current status of the project  
-The PCB layout has been updated (update U1) to add a few missing address lines to the CPLD. If you manufactured a board already from the first release, check my VCF thread for details how to wire the address lines from the slot to the IO decoder CPLD on a few free pin vias using a small piece of flatcable.  
-The project is being built by sqpat, check his updates in the VCF thread for his assembly and testing work.  
-I will also order the TOPCAT REV2 PCB made and I will transfer my REV1 components to the new board so I can fully test it myself as well.  
-Regardless, I will be testing with the Intel 331 chip and VLSI 320A TOPCAT chip revision, which has shown indications to be able to operate faster than the normal 320 version.  
+(layout update REV2-U2) I have reworked the entire layout another time to move the Pico modules and create more space for the PicoGUS level shifters.  
+In addition I have spread out via locations to allow power plane connections to fill in between vias as much as reasonably possible in order to attempt to provide more direct current paths for power planes in the areas where large numbers of vias are concentrated.  
+I have increased the power buffering capacitor values and changed their locations slightly.  
 
-More details from assembly, debugging and testing the project will follow here as soon as I have a board available to assemble.  
+# Regarding buffer capacitors  
+It's at the builder's discretion regarding the buffer capacitor values to choose, the value of 1000µF is merely a reasonable value, however also larger values if these can fit could be soldered in to attempt to provide ample supply current in various locations. Possibly lower values may suffice which can be tested if no large ones are on hand. When ordering parts I suggest finding some small footprint caps with larger value like 1000µF. In some locations it may be preferred to solder the buffer capacitors in horizontal position for example if they otherwise would hinder a connector or expansion card etc.  
+
+I have ordered the PCB from JLCPCB (29-6-2026) and after receiving the PCB I will transfer my REV1 components to the new board so I can fully test it myself as well.   Regardless, I will be testing with the Intel 331 chip and VLSI 320A TOPCAT chip revision, which have shown indications to be able to operate faster than the normal 320 version.  So I will be testing with 72 pin SIMMs which contain less chips on the DRAM bus and we now have the series termination resistors as optional footprints which can be soldered in place or bypassed by exchanging them with 0 ohms resistors.  
+
+More information will be provided as soon as I can start testing and debugging the project.
 
 Further updates will follow.  
 
+Kind regards,
+
+Rodney
+
 Last update:  
 
-25-5-2026
+29-6-2026

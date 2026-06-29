@@ -170,6 +170,8 @@ I have increased the power buffering capacitor values and changed their location
 It's at the builder's discretion regarding the buffer capacitor values to choose, the value of 1000µF is merely a reasonable value, however also larger values if these can fit could be soldered in to attempt to provide ample supply current in various locations. Possibly lower values may suffice which can be tested if no large ones are on hand. When ordering parts I suggest finding some small footprint caps with larger value like 1000µF. In some locations it may be preferred to solder the buffer capacitors in horizontal position for example if they otherwise would hinder a connector or expansion card etc.  
 
 # PCBs are now ordered from JLCPCB  
+![JLCPCB_VIEWER_IMAGE](JLCPCB_VIEWER.png)  
+
 I have ordered the PCBs (29-6-2026) and after receiving the PCB I will transfer my REV1 components to the new board so I can fully test it myself as well.   Regardless, I will be testing with the Intel 331 chip and VLSI 320A TOPCAT chip revision, which have shown indications to be able to operate faster than the normal 320 version.  So I will be testing with 72 pin SIMMs which contain less chips on the DRAM bus and we now have the series termination resistors as optional footprints which can be soldered in place or bypassed by exchanging them with 0 ohms resistors.  
 
 More information will be provided as soon as I can start testing and debugging the project.
